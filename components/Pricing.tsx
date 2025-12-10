@@ -177,7 +177,7 @@ const Pricing: React.FC<PricingProps> = ({ onSignup }) => {
                         disabled={!!processing}
                         className="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold font-mono uppercase tracking-wider text-xs hover:bg-indigo-500 transition-all shadow-[0_0_15px_rgba(79,70,229,0.3)] flex items-center justify-center gap-2"
                     >
-                        {processing === 'freelancer' ? <Loader2 className="w-4 h-4 animate-spin" /> : "Request Access"}
+                        {processing === 'freelancer' ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add me to the waitlist"}
                     </button>
                 </div>
 
@@ -218,13 +218,13 @@ const Pricing: React.FC<PricingProps> = ({ onSignup }) => {
 
                         <ul className="space-y-4 mb-8 relative z-10">
                             {[
-                                { text: "PDF Change Order Generator", highlight: true, color: 'emerald' },
-                                { text: "Slack \"Sentinel\" Bot Integration", highlight: true, color: 'emerald' },
-                                { text: "Unlimited Rulebooks (Clients)", highlight: true, color: 'purple' },
-                                { text: "Revenue Recovery Dashboard", highlight: true, color: 'purple' }
+                                { text: "PDF Change Order Generator", highlight: true },
+                                { text: "Slack \"Sentinel\" Bot Integration", highlight: true },
+                                { text: "Unlimited Rulebooks (Clients)", highlight: true },
+                                { text: "Revenue Recovery Dashboard", highlight: true }
                             ].map((item, i) => (
                                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300">
-                                    <div className={`p-0.5 rounded-full ${item.highlight ? (item.color === 'emerald' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.5)]') : 'bg-slate-700'}`}>
+                                    <div className={`p-0.5 rounded-full ${item.highlight ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-slate-700'}`}>
                                         <Check className="w-3 h-3 text-white" />
                                     </div>
                                     <span className={item.highlight ? "text-white font-bold" : ""}>{item.text}</span>
@@ -246,7 +246,7 @@ const Pricing: React.FC<PricingProps> = ({ onSignup }) => {
                                     </>
                                 ) : (
                                     <>
-                                        <span>Request Access</span>
+                                        <span>Add me to the waitlist</span>
                                         <CreditCard className="w-4 h-4" />
                                     </>
                                 )}
