@@ -39,8 +39,8 @@ const Header: React.FC<HeaderProps> = ({ credits, currentView, onNavigate, onLog
                     </div>
                 </div>
 
-                {/* Navigation Menu - Desktop */}
-                <nav className="hidden md:flex items-center gap-8">
+                {/* Navigation Menu - Desktop (Centered) */}
+                <nav className="hidden md:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
                     <button
                         onClick={() => onNavigate('landing')}
                         className="text-xs font-mono font-medium uppercase tracking-widest text-slate-400 hover:text-white transition-colors"
@@ -88,12 +88,14 @@ const Header: React.FC<HeaderProps> = ({ credits, currentView, onNavigate, onLog
                                         Sign Out
                                     </button>
                                 ) : (
-                                    <button
-                                        onClick={onLogin}
-                                        className="hidden sm:block text-xs font-mono font-medium text-slate-400 hover:text-white transition-colors uppercase tracking-widest"
-                                    >
-                                        Login
-                                    </button>
+                                    /* Login Disabled for Waitlist Phase */
+                                    // <button
+                                    //     onClick={onLogin}
+                                    //     className="hidden sm:block text-xs font-mono font-medium text-slate-400 hover:text-white transition-colors uppercase tracking-widest"
+                                    // >
+                                    //     Login
+                                    // </button>
+                                    null
                                 )}
                                 <button
                                     onClick={() => onNavigate('pricing')}
