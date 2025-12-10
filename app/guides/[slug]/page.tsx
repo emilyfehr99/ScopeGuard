@@ -85,12 +85,82 @@ export default function GuidePage({ params }: Props) {
                         </div>
                     </div>
 
-                    {/* Simple Markdown Rendering (Replace with a proper markdown parser in production if needed, but for now we map paragraphs manually or just render text if simple) 
-                        Since the content is a simple string in `guides.ts`, we'll render it with whitespace preservation.
-                        For a real blog, we'd use 'react-markdown' or 'mdx'.
-                    */}
-                    <div className="whitespace-pre-wrap leading-relaxed text-slate-300 text-lg">
-                        {guide.content}
+                    {/* Structured Content Rendering */}
+                    <div className="space-y-8">
+                        {guide.blocks.map((block, index) => {
+                            switch (block.type) {
+                                case 'header':
+                                    return (
+                                        <h2 key={index} className="text-2xl md:text-3xl font-bold text-white mt-12 mb-6">
+                                            {block.content}
+                                        </h2>
+                                    );
+                                case 'text':
+                                    return (
+                                        <p key={index} className="text-lg text-slate-300 leading-relaxed whitespace-pre-wrap">
+                                            {(block.content as string).split('**').map((part, i) =>
+                                                i % 2 === 1 ? <strong key={i} className="text-white font-semibold">{part}</strong> : part
+                                            )}
+                                        </p>
+                                    );
+                                case 'list':
+                                    return (
+                                        <ul key={index} className="space-y-4 my-6">
+                                            {block.items.map((item, i) => (
+                                                <li key={i} className="flex gap-4 items-start text-slate-300">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2.5 flex-shrink-0" />
+                                                    <span className="leading-relaxed">
+                                                        {item.split('**').map((part, partIndex) =>
+                                                            partIndex % 2 === 1 ? <strong key={partIndex} className="text-white font-semibold">{part}</strong> : part
+                                                        )}
+                                                    </span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    );
+                                case 'alert':
+                                    return (
+                                        <div key={index} className={`my-8 p-6 rounded-xl border ${block.variant === 'info' ? 'bg-indigo-900/20 border-indigo-500/30 text-indigo-200' :
+                                                block.variant === 'warning' ? 'bg-amber-900/20 border-amber-500/30 text-amber-200' :
+                                                    block.variant === 'success' ? 'bg-emerald-900/20 border-emerald-500/30 text-emerald-200' :
+                                                        'bg-rose-900/20 border-rose-500/30 text-rose-200'
+                                            }`}>
+                                            {block.title && <h4 className="font-bold mb-2 flex items-center gap-2">
+                                                {block.variant === 'info' && '💡'}
+                                                {block.variant === 'success' && '✅'}
+                                                {block.title}
+                                            </h4>}
+                                            <p className="opacity-90 leading-relaxed font-mono text-sm">
+                                                {block.content}
+                                            </p>
+                                        </div>
+                                    );
+                                case 'chart':
+                                    return (
+                                        <div key={index} className="my-12 p-8 bg-slate-900 rounded-2xl border border-slate-800 shadow-xl">
+                                            <h4 className="text-slate-400 font-mono text-xs uppercase tracking-widest mb-8 text-center">{block.title}</h4>
+                                            <div className="space-y-6">
+                                                {block.data.map((item, i) => (
+                                                    <div key={i} className="space-y-2">
+                                                        <div className="flex justify-between text-sm font-medium">
+                                                            <span className="text-slate-300">{item.label}</span>
+                                                            <span className="text-white font-mono">${item.value.toLocaleString()}</span>
+                                                        </div>
+                                                        <div className="h-4 bg-slate-800 rounded-full overflow-hidden">
+                                                            <div
+                                                                className={`h-full ${item.color} rounded-full transition-all duration-1000 ease-out`}
+                                                                style={{ width: `${(item.value / Math.max(...block.data.map(d => d.value))) * 100}%` }}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    );
+                                default:
+                                    return null;
+                            }
+                        })}
                     </div>
 
                 </article>

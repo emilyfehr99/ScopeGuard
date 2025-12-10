@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Shield, Activity, Zap, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
@@ -41,6 +42,12 @@ const Header: React.FC<HeaderProps> = ({ credits, currentView, onNavigate, onLog
 
                 {/* Navigation Menu - Desktop (Centered) */}
                 <nav className="hidden md:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
+                    <Link
+                        href="/guides"
+                        className="text-xs font-mono font-medium uppercase tracking-widest text-slate-400 hover:text-white transition-colors"
+                    >
+                        Guides
+                    </Link>
                     <button
                         onClick={() => onNavigate('landing')}
                         className="text-xs font-mono font-medium uppercase tracking-widest text-slate-400 hover:text-white transition-colors"
@@ -140,6 +147,13 @@ const Header: React.FC<HeaderProps> = ({ credits, currentView, onNavigate, onLog
             {isMobileMenuOpen && (
                 <div className="fixed inset-0 top-20 bg-slate-950/95 backdrop-blur-xl z-40 md:hidden animate-in slide-in-from-top-10 flex flex-col p-6 border-t border-white/10">
                     <nav className="flex flex-col gap-6 items-center pt-8">
+                        <Link
+                            href="/guides"
+                            className="text-lg font-mono font-medium uppercase tracking-widest text-slate-300 hover:text-white transition-colors"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                            Guides
+                        </Link>
                         <button
                             onClick={() => { onNavigate('landing'); setIsMobileMenuOpen(false); }}
                             className="text-lg font-mono font-medium uppercase tracking-widest text-slate-300 hover:text-white transition-colors"
